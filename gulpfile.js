@@ -1,16 +1,9 @@
 'use strict';
 const gulp = require('gulp');
 
-const browserSync = require('browser-sync')
+const browserSync = require('browser-sync').create();
 
 const sass = require('gulp-sass')(require('sass'));
-
-gulp.task('hello', ()=>{
-   
-    return gulp.src('./src/sass/main.scss')
-    .pipe(sass({outputStyle:'compressed'}).on('error', sass.logError))
-    .pipe(gulp.dest('./dist'));
-});
 
 gulp.task('server', ()=>{
     browserSync.init({
@@ -18,8 +11,17 @@ gulp.task('server', ()=>{
             baseDir: './dist'
         }
     });
+
+    gulp.watch('./src/sass/main.scss', gulp.series('sass'));
+    gulp.watch('./src/*.html').on('change', browserSync.reload);
+});
+
+gulp.task('sass', ()=>{
+
+    return gulp.src('./src/sass/main.scss')
+    .pipe(sass()).pipe(gulp.dest('dist'))
+    .pipe(browserSync.stream());
+
 })
 
-gulp.task('html', ()=>{
-    return gulp.src('./src/*.html').pipe(gulp.dest('./dist'));
-})
+gulp.task('start', gulp.series('server', 'sass'));

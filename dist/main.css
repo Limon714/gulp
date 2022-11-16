@@ -1,1 +1,10 @@
-body{background-color:red;color:#fff;text-align:center}
+body {
+  background-color: red;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+body h1 {
+  margin-top: 50px;
+  border: 2px solid rgb(204, 192, 192);
+  border-width: 30px;
+}
