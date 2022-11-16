@@ -23,5 +23,6 @@ gulp.task('sass', ()=>{
     .pipe(browserSync.stream());
 
 })
+// serving gulp project
 
 gulp.task('start', gulp.series('server', 'sass'));
